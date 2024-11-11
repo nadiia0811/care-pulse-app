@@ -10,10 +10,12 @@ import { FormControl,
 import { Input } from "./ui/input";
 import { FormFieldType } from "./forms/PatientForm";
 import Image from "next/image";
-import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input';
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 
+
+type E164Number = string;
 
 interface CustomProps {
   control: Control<any>,
