@@ -12,10 +12,10 @@ import { FormFieldType } from "./forms/PatientForm";
 import Image from "next/image";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+import { E164Number } from "libphonenumber-js/core";
 
 
 
-type E164Number = string;
 
 interface CustomProps {
   control: Control<any>,
@@ -36,7 +36,7 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
   const { iconSrc, fieldType, iconAlt, placeholder } = props;
   switch( fieldType ) {
     case FormFieldType.INPUT: 
-      return <div className="flex rounded-md border-dark-100 bg-dark-400">
+      return <div className="flex rounded-md border-dark-200 bg-dark-400">
                { iconSrc && (
                 <Image src={iconSrc}
                        width={24}
@@ -47,7 +47,8 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
                 <FormControl>
                    <Input placeholder={placeholder}
                           {...field} 
-                          className="border-0 shad-input"/>
+                          className="border-0  shad-input"/> 
+                          
                 </FormControl> 
              </div>
     
@@ -58,9 +59,10 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
                       placeholder={placeholder}
                       international
                       withCountryCallingCode
-                      value={field.value as E164Number | undefined}
-                      onChange={field.onChange}
-                      className="input-phone"/>
+                      value={field.value as E164Number | undefined} 
+                      onChange={field.onChange} 
+                      className="input-phone" />
+
         </FormControl>
       )
     
