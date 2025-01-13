@@ -13,6 +13,8 @@ import Image from "next/image";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { E164Number } from "libphonenumber-js/core";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 
@@ -33,7 +35,7 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
-  const { iconSrc, fieldType, iconAlt, placeholder } = props;
+  const { iconSrc, fieldType, iconAlt, placeholder, showTimeSelect, dateFormat } = props;
   switch( fieldType ) {
     case FormFieldType.INPUT: 
       return <div className="flex rounded-md border-dark-200 bg-dark-400">
@@ -62,10 +64,34 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
                       value={field.value as E164Number | undefined} 
                       onChange={field.onChange} 
                       className="input-phone" />
-
-        </FormControl>
-      )
+        </FormControl> )
     
+    case FormFieldType.DATE_PICKER:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+           <Image src="/assets/icons/calendar.svg"
+                  width={24}
+                  height={24}
+                  alt="calendar"
+                  className="ml-2"/>
+           <FormControl>
+              <DatePicker selected={field.value} 
+                          onChange={(date) => field.onChange(date)} 
+                          dateFormat={dateFormat ?? "MM/dd/yyyy"}
+                          showTimeSelect={showTimeSelect ?? false}
+                          timeInputLabel="Time:"/>
+           </FormControl>       
+        </div>
+      )
+
+    case FormFieldType.SKELETON:
+      return (
+         <div>
+
+         </div>
+      )
+    //default: 
+    break;    
   }
 
 }

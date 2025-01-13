@@ -32,6 +32,6 @@ export const getUser = async (userId: string) => {
     const user = await users.get(userId);
     return parseStringify(user);  //create object from JSON string
   } catch (error) {
-    console.log()
+    console.log(error);
   }
 }
