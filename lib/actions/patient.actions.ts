@@ -2,6 +2,7 @@
 
 import { Query, ID } from "node-appwrite";
 import { users } from "../appwrite.config";
+import { parseStringify } from "../utils";
 
 
 
@@ -9,7 +10,7 @@ import { users } from "../appwrite.config";
 export const createUser = async (user: CreateUserParams) => {
    
     try {
-       const newUser =  await users.create(  //here is error            
+       const newUser =  await users.create(             
          ID.unique(), 
          user.email, 
          user.phone, 
@@ -25,3 +26,12 @@ export const createUser = async (user: CreateUserParams) => {
       console.error("An error occurred while creating a new user:", err);
    } 
 }; 
+
+export const getUser = async (userId: string) => {
+  try {
+    const user = await users.get(userId);
+    return parseStringify(user);  //create object from JSON string
+  } catch (error) {
+    console.log()
+  }
+}

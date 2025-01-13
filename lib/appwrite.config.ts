@@ -12,8 +12,6 @@ export const {
 } = process.env;
 
 const client = new sdk.Client();
-//const account = new sdk.Account(client);  ////
-//console.log("acount: ", account) ////
  
 client.setEndpoint(ENDPOINT!)  
       .setProject(PROJECT_ID!)
