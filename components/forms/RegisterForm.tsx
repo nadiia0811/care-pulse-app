@@ -15,6 +15,9 @@ import { FormFieldType } from './PatientForm';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { GenderOptions } from '@/constants';
 import { Label } from '../ui/label';
+import { Doctors } from '@/constants';
+import { SelectItem } from '../ui/select';
+import Image from 'next/image';
 
 
 
@@ -119,12 +122,57 @@ const RegisterForm = ({user}: {user: User}) => {
             </div>
 
             <div className="flex flex-col gap-6 xl:flex-row">
-               
+                <CustomFormField control={form.control}
+                                 fieldType={FormFieldType.INPUT}
+                                 name="address"
+                                 label="Address"
+                                 placeholder="14th Street, New York" /> 
+
+                <CustomFormField control={form.control}
+                                 fieldType={FormFieldType.INPUT}
+                                 name="occupation"
+                                 label="Occupation"
+                                 placeholder="Software Engineer" />                
             </div>
 
             <div className="flex flex-col gap-6 xl:flex-row">
-               
+                <CustomFormField control={form.control}
+                                 fieldType={FormFieldType.INPUT}
+                                 name="emergencyContactName"
+                                 label="Emergency Contact Name"
+                                 placeholder="Guardian's name" /> 
+
+                <CustomFormField control={form.control}
+                                 fieldType={FormFieldType.PHONE_INPUT}
+                                 name="emergencyContactNumber"
+                                 label="Emergency Contact Number"
+                                 placeholder="(555) 123-1234" />
             </div>
+
+            <section className="space-y-6">
+                <div className="mb-9 space-y-1">
+                  <h2 className="sub-header">Medical Information</h2>
+                </div>               
+            </section> 
+
+            <CustomFormField control={form.control}
+                             fieldType={FormFieldType.SELECT}
+                             name="primaryPhysician"
+                             label="Primary Physician" 
+                             placeholder="Select a physician">
+              { Doctors.map((doctor) => (
+                <SelectItem key={doctor.name} value={doctor.name}>
+                   <div className="flex cursor-poiner items-center gap-2">
+                      <Image src={doctor.image}
+                             width={32}
+                             height={32} 
+                             alt={doctor.name}
+                             className="rounded-full border border-dark-500"/>
+                      <p>{doctor.name}</p>       
+                   </div>
+                </SelectItem>
+              )) }             
+            </CustomFormField>                   
 
             <div className="flex flex-col gap-6 xl:flex-row">
                

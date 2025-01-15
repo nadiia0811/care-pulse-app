@@ -15,6 +15,7 @@ import PhoneInput from "react-phone-number-input";
 import { E164Number } from "libphonenumber-js/core";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Select, SelectContent, SelectValue, SelectTrigger } from "./ui/select";
 
 
 
@@ -35,7 +36,13 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
-  const { iconSrc, fieldType, iconAlt, placeholder, showTimeSelect, dateFormat } = props;
+  const { iconSrc, 
+          fieldType, 
+          iconAlt, 
+          placeholder, 
+          showTimeSelect, 
+          dateFormat,
+          renderSkeleton } = props;
   switch( fieldType ) {
     case FormFieldType.INPUT: 
       return <div className="flex rounded-md border-dark-200 bg-dark-400">
@@ -49,8 +56,7 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
                 <FormControl>
                    <Input placeholder={placeholder}
                           {...field} 
-                          className="border-0  shad-input"/> 
-                          
+                          className="border-0  shad-input"/>                          
                 </FormControl> 
              </div>
     
@@ -79,16 +85,33 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
                           onChange={(date) => field.onChange(date)} 
                           dateFormat={dateFormat ?? "MM/dd/yyyy"}
                           showTimeSelect={showTimeSelect ?? false}
-                          timeInputLabel="Time:"/>
+                          timeInputLabel="Time:"
+                          wrapperClassName="date-picker"
+                          />
            </FormControl>       
         </div>
       )
 
     case FormFieldType.SKELETON:
       return (
-         <div>
+           renderSkeleton ? renderSkeleton(field) : null 
+      )
 
-         </div>
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+           <Select onValueChange={field.onChange}
+                   defaultValue={field.value}>
+              <FormControl className="shad-select-trigger">
+                <SelectTrigger>
+                   <SelectValue placeholder={placeholder}/>
+                </SelectTrigger>                 
+              </FormControl> 
+              <SelectContent className="shad-select-content">
+                 {props.children}
+              </SelectContent>     
+           </Select>
+        </FormControl>
       )
     //default: 
     break;    
