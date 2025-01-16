@@ -9,6 +9,7 @@ import { FormControl,
          FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { FormFieldType } from "./forms/PatientForm";
+import { Textarea } from "@/components/ui/textarea"
 import Image from "next/image";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -102,8 +103,8 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
         <FormControl>
            <Select onValueChange={field.onChange}
                    defaultValue={field.value}>
-              <FormControl className="shad-select-trigger">
-                <SelectTrigger>
+              <FormControl>
+                <SelectTrigger className="shad-select-trigger">
                    <SelectValue placeholder={placeholder}/>
                 </SelectTrigger>                 
               </FormControl> 
@@ -113,8 +114,19 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
            </Select>
         </FormControl>
       )
-    //default: 
-    break;    
+
+    case FormFieldType.TEXTAREA:
+      return (
+         <FormControl>
+            <Textarea placeholder={placeholder}
+                      {...field} 
+                      className="shad-textArea" 
+                      disabled={props.disabled}/>           
+         </FormControl>
+         
+      )  
+     /* default: 
+        break; */    
   }
 
 }
