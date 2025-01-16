@@ -252,6 +252,29 @@ const RegisterForm = ({user}: {user: User}) => {
                                 </FormControl>
                              )}/>                        
 
+            <section className="space-y-6">
+                <div className="mb-9 space-y-1">
+                  <h2 className="sub-header">Consent and Privacy</h2>
+                </div>               
+            </section>
+
+            <CustomFormField control={form.control}
+                             fieldType={FormFieldType.CHECKBOX}
+                             name="treatmentConsent"
+                             label="I consent to treatment"
+            />
+
+            <CustomFormField control={form.control}
+                             fieldType={FormFieldType.CHECKBOX}
+                             name="disclosureConsent"
+                             label="I consent to disclosure of information"
+            />
+
+            <CustomFormField control={form.control}
+                             fieldType={FormFieldType.CHECKBOX}
+                             name="privacyConsent"
+                             label="I consent to privacy policy"
+            />
             <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
         </form>
     </Form>

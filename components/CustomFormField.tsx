@@ -17,6 +17,7 @@ import { E164Number } from "libphonenumber-js/core";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectValue, SelectTrigger } from "./ui/select";
+import { Checkbox } from "./ui/checkbox";
 
 
 
@@ -43,7 +44,8 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
           placeholder, 
           showTimeSelect, 
           dateFormat,
-          renderSkeleton } = props;
+          renderSkeleton,
+          label } = props;
   switch( fieldType ) {
     case FormFieldType.INPUT: 
       return <div className="flex rounded-md border-dark-200 bg-dark-400">
@@ -124,9 +126,23 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
                       disabled={props.disabled}/>           
          </FormControl>
          
+      ) 
+      
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+           <div className="flex items-center gap-4">
+              <Checkbox id={props.name}
+                        checked={field.value} 
+                        onCheckedChange={field.onChange} />
+              <label htmlFor={props.name}
+                     className="checkbox-label">
+                { label }
+              </label>          
+           </div>
+        </FormControl>
       )  
-     /* default: 
-        break; */    
+       
   }
 
 }
