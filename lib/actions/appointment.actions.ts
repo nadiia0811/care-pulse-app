@@ -18,4 +18,19 @@ console.log(APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases )
     } catch (error) {
         console.log(error);
     } 
+};
+
+
+export const getAppointment = async (appointmentId: string) => {
+    try {
+        const appointment = await databases.getDocument(
+          DATABASE_ID!,
+          APPOINTMENT_COLLECTION_ID!,
+          appointmentId,
+        );
+      return parseStringify(appointment);
+    } catch (error) {
+        console.log("Failed to fetch appointment: ", error);
+    }
+  
 }
