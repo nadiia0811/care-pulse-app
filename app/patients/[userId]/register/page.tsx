@@ -8,7 +8,6 @@ import { getUser } from '@/lib/actions/patient.actions';
 const Register = async ({params} : {params: {userId: string}}) => { 
     const {userId} = params;
     const user = await getUser(userId);
-    //console.log(user)
   return (
      <div className="flex h-screen max-h-screen"> 
         <section className="remove-scrollbar container">

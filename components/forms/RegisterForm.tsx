@@ -41,8 +41,7 @@ const RegisterForm = ({user}: {user: User}) => {
 
   
    const onSubmit = async (values: PatientFormData) => {  // values = {...PatientFormData}
-    
-    //console.log("values:",values)// ok
+  
    setIsLoading(true);
    let formData;
 

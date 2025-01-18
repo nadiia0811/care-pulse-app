@@ -46,8 +46,7 @@ export const getUser = async (userId: string) => {
 
 
 export const registerPatient = async ({identificationDocument, ...patient}: RegisterUserParams) => {
-  //console.log("identification doc: ", identificationDocument)
-  //console.log("patient: ", patient)
+ 
    try {  //save identification document in app-write store
     let file;
     if (identificationDocument) {
@@ -72,4 +71,20 @@ export const registerPatient = async ({identificationDocument, ...patient}: Regi
    } catch (error) {
      console.log(error);
    }
-}
+};
+
+export const getPatient = async (userId: string) => {
+  try {
+    const patients = await databases.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [
+        Query.equal("userId", userId)
+      ]
+    );
+    return parseStringify(patients.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+

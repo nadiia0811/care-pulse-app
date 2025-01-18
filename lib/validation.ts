@@ -1,15 +1,3 @@
-/* import { z } from "zod";
-
-export const UserFormValidation = z.object({
-    name: z.string()
-               .min(2, "Username must be at least 2 characters")
-               .max(50, "Username must be most 50 characters"),
-    email: z.string()
-            .email("Invalid email address"),
-    phone: z.string()
-            .refine((phone) => /^\+?[1-9]\d{1,14}$/.test(phone), "Invalid phone number")                            
-  }) */
-
 import { z } from "zod";
 
 export const UserFormValidation = z.object({
@@ -88,7 +76,18 @@ export const PatientFormValidation = z.object({
     }),
 });
 
-export const CreateAppointmentSchema = z.object({
+export const AppointmentFormValidation = z.object({
+  primaryPhysician: z.string().min(2, "Select at least one doctor"),
+  schedule: z.coerce.date(),
+  reason: z
+    .string()
+    .min(2, "Reason must be at least 2 characters")
+    .max(500, "Reason must be at most 500 characters"),
+  note: z.string().optional(),  
+  cancellationReason: z.string().optional(),
+})
+
+export const CreateAppointmentSchema = z.object({  
   primaryPhysician: z.string().min(2, "Select at least one doctor"),
   schedule: z.coerce.date(),
   reason: z
