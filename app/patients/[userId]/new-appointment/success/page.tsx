@@ -1,12 +1,17 @@
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
+import { getAppointment } from '@/lib/actions/appointment.actions';
+import { Doctors } from '@/constants';
+import { formatDateTime } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 
 // extracting variable value from parameters
-const SuccessPage = ({params: {userId}, searchParams}: SearchParamProps) => {
-    const appointmentId = searchParams?.appointmentId as string | "";
-    console.log(appointmentId) 
+const SuccessPage = async ({params: {userId}, searchParams}: SearchParamProps) => {
+  const appointmentId = searchParams?.appointmentId as string | "";
+  const appointment = await getAppointment(appointmentId);
+  const doctor = Doctors.find((doc) => doc.name === appointment.primaryPhysician);
   return (
     <div className="flex h-screen max-h-screen px-[5%]">
         <div className="success-img">
@@ -34,9 +39,28 @@ const SuccessPage = ({params: {userId}, searchParams}: SearchParamProps) => {
             <section className="request-details">
                 <p>Requested appointment details:</p>
                 <div className="flex items-center gap-3">
-                    {/* <Image src=""/> */}
+                    <Image src={`${doctor?.image!}`}
+                           alt="doctor img"
+                           width={100}
+                           height={100} 
+                           className="size-6"/> 
+                    <p className="whitespace-nowrap">Dr.{doctor?.name}</p>       
                 </div>
-            </section>          
+                <div className="flex gap-2">
+                    <Image src="/assets/icons/calendar.svg"
+                           alt="calendar"
+                           width={24}
+                           height={24}/>
+                    <p>{formatDateTime(appointment.schedule).dateTime}</p>       
+                </div>
+            </section> 
+            <Button variant="outline" className="shad-primary-btn" asChild>
+                <Link href={`/patients/${userId}/new-appointment`}>
+                   New Appointment
+                </Link>
+            </Button>
+
+            <p className="copyright">© 2025 CarePulse</p>                  
         </div>
     </div>
   )

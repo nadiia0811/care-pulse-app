@@ -19,7 +19,7 @@ const Register = async ({params} : {params: {userId: string}}) => {
                         className="mb-12 h-10 w-fit" />
                 <RegisterForm user={user} /> 
                 <p className="copyright text-dark-600 py-12">
-                    © 2024 CarePulse
+                    © 2025 CarePulse
                 </p> 
                    {/*  <Link href="?admin=true" className="text-green-500">
                         Admin
