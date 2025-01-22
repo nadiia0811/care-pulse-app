@@ -5,18 +5,12 @@ import { ColumnDef, getPaginationRowModel, } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import Image from "next/image";
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import StatusBadge from "../StatusBadge";
 import { formatDateTime } from "@/lib/utils";
 import { Appointment } from "@/types/appwrite.types";
 import { Doctors } from "@/constants";
+import AppointmentModal from "../AppointmentModal";
 
 
 // This type is used to define the shape of our data.
@@ -72,11 +66,20 @@ export const columns: ColumnDef<Appointment>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="pl-4">Actions</div>,
+    header: () => <div className="pl-4 min-w-[100px]">Actions</div>,
     cell: ({ row }) => {
+      const { original: data} = row;
       return (
         <div className="flex gap-1">
-           AppointmentModal
+            <AppointmentModal type="schedule"
+                              patientId={data.patient.$id} 
+                              userId={data.userId} 
+                              appointment={data}  />
+            <AppointmentModal type="cancel"
+                              patientId={data.patient.$id} 
+                              userId={data.userId} 
+                              appointment={data} />
+           
         </div>
       )
     },
