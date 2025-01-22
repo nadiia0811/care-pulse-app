@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
 
 
 export const createAppointment = async (appointmentValues: CreateAppointmentParams) => {
-console.log(APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases )
+
     try {
         const newAppointment = await databases.createDocument(
             DATABASE_ID!,
@@ -81,12 +81,13 @@ export const getRecentAppointmentList = async () => {
 };
 
 export const updateAppointment = async ({ appointmentId, userId, appointment, type}: UpdateAppointmentParams) => {
+
    try {
      const updatedAppointment = await databases.updateDocument(
       DATABASE_ID!,
       APPOINTMENT_COLLECTION_ID!,
-      appointmentId,
-      appointment    
+      appointmentId!,
+      appointment   
      );
 
      if (!updatedAppointment) {
@@ -100,4 +101,4 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
    } catch (error) {
     console.log("Failed to update appointment: ", error);
    }
-}
+};
