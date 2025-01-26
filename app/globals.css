@@ -131,6 +131,10 @@
     @apply flex w-full items-center justify-between space-x-2 p-4;
   }
 
+  .rotate-180 {
+     transform: rotate(180deg);
+  }
+
   /* ===== ALIGNMENTS */
   .flex-center {
     @apply flex items-center justify-center;

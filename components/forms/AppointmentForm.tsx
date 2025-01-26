@@ -24,14 +24,14 @@ type PatientData = {
     patientId: string;
     userId: string;
     appointment?: Appointment;
-    setOpen: (open:boolean) => void
+    setOpen?: (open:boolean) => void
 }
 
 const AppointmentForm = ({type, patientId, userId, appointment, setOpen}: PatientData) => {
 
-  const AppointmentFormValidation = getAppointmentSchema(type);   
+  const AppointmentFormValidation = getAppointmentSchema(type);  
   type AppointmentFormData = z.infer<typeof AppointmentFormValidation>;  
-
+  
   const [isLoading, setIsLoading] = useState(false);
   let buttonLabel;
 
@@ -61,7 +61,6 @@ const AppointmentForm = ({type, patientId, userId, appointment, setOpen}: Patien
   });
 
    const onSubmit = async (values: AppointmentFormData) => {  
-   
     let status;
 
     switch (type) {
@@ -93,7 +92,7 @@ const AppointmentForm = ({type, patientId, userId, appointment, setOpen}: Patien
               form.reset();
               router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`);
             }
-        } else {
+        } else { 
             const appointmentToUpdate = {
               userId,
               appointmentId: appointment?.$id!,
@@ -105,6 +104,7 @@ const AppointmentForm = ({type, patientId, userId, appointment, setOpen}: Patien
               },
               type
             };
+
 
             const updatedAppointment = await updateAppointment(appointmentToUpdate);
             if (updatedAppointment) {
