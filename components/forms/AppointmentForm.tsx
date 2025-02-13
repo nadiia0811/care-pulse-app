@@ -53,14 +53,18 @@ const AppointmentForm = ({type, patientId, userId, appointment, setOpen}: Patien
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
       primaryPhysician: appointment ? appointment.primaryPhysician : "",
-      schedule: appointment? new Date(appointment.schedule) : new Date(),
+      schedule: appointment? new Date(appointment.schedule) : new Date(Date.now()),
       reason: appointment ? appointment.reason : "",
       note: appointment ? appointment.note : "",
-      cancellationReason: appointment ? appointment.cancellationReason : ""
+      cancellationReason: appointment?.cancellationReason || ""
     },
   });
 
-   const onSubmit = async (values: AppointmentFormData) => {  
+
+  
+   const onSubmit = async (values: AppointmentFormData, e: React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault();
+    
     let status;
 
     switch (type) {
