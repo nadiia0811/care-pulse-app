@@ -62,8 +62,7 @@ const AppointmentForm = ({type, patientId, userId, appointment, setOpen}: Patien
 
 
   
-   const onSubmit = async (values: AppointmentFormData, e: React.FormEvent<HTMLFormElement>) => { 
-    e.preventDefault();
+   const onSubmit = async (values: AppointmentFormData) => { 
     
     let status;
 

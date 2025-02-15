@@ -2,9 +2,10 @@
 
 import { ID, Query } from "node-appwrite";
 import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { revalidatePath } from "next/cache";
+import { messaging } from "../appwrite.config";
 
 
 
@@ -95,10 +96,32 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
      }
 
      //SMS notification
+     const smsMessage = `
+       Hi, it's Care-Pulse.
+       ${type === 'schedule' ? 
+        `Your appointment has been scheduled for 
+         ${formatDateTime(appointment.schedule!).dateTime} with Dr.${appointment.primaryPhysician}`
+         : `We regret to inform you that your appointment has been cancelled
+            for the following reason: ${appointment.cancellationReason}`
+      }`;
+     await sendSMSNotification(userId, smsMessage);
 
-     revalidatePath("/admin");
+     revalidatePath("/admin");   //displays new data about appointment on admin dashboard
      return parseStringify(updatedAppointment);
    } catch (error) {
-    console.log("Failed to update appointment: ", error);
+      console.log("Failed to update appointment: ", error);
    }
 };
+
+export const sendSMSNotification = async (userId: string, content: string) => {
+  try {
+    const message = await messaging.createSms(
+      ID.unique(),
+      content,
+      [],
+      [userId],   
+    )
+  } catch (error) {
+    console.log(error);
+  }
+}
