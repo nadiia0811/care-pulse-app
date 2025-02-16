@@ -12,7 +12,13 @@ import { BUCKET_ID,
 import { parseStringify } from "../utils";
 import { InputFile } from "node-appwrite/file";
 
-
+class ApiError extends Error {
+  code: number;
+  constructor(code: number) {
+    super();
+    this.code = code;
+  }
+}
 
 //Creating new user in Appwrite database
 export const createUser = async (user: CreateUserParams) => {
@@ -25,8 +31,8 @@ export const createUser = async (user: CreateUserParams) => {
          undefined,   
          user.name ); 
          return newUser;     
-    } catch (err: any) {
-      if( err && err?.code === 409 ) {  //such a user exists
+    } catch (err: unknown) {
+      if( err instanceof ApiError && err.code == 409 ) {  //such a user exists
             const documents = await users.list([
             Query.equal("email", [user.email])]);
             return documents?.users[0];       

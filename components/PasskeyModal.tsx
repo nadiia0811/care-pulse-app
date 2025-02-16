@@ -11,7 +11,7 @@ import {
     AlertDialogTitle,
   } from "@/components/ui/alert-dialog";
 import Image from 'next/image';
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useParams } from "next/navigation";
 import {
   InputOTP,
   InputOTPGroup,
@@ -27,24 +27,29 @@ import { encryptKey, decryptKey } from '@/lib/utils';
 const PasskeyModal = () => {
     const [open, setOpen] = useState(true);
     const router = useRouter();
-    const path = usePathname();
+    const path = usePathname();  //path = full url with query params
     const [passkey, setPasskey] = useState("");  
     const [error, setError] = useState("");
+    const {pathname} = useParams();   // url without query params
 
     const encryptedKey = typeof window !== "undefined" ?
        window.localStorage.getItem("accessKey") : null;
 
     useEffect(() => {
       const accessKey = encryptedKey && decryptKey(encryptedKey);
+      
       if (path) {
         if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
           setOpen(false);
-          router.push("/admin");       
+          if (pathname !== "/admin") {
+            router.push("/admin");
+          }
+                 
           } else {
             setOpen(true);           
         }
       }
-    }, [encryptedKey]);   
+    }, [encryptedKey, path, router, pathname]);   
 
     const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();

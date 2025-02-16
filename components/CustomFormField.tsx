@@ -1,8 +1,7 @@
 "use client"
 
-import { Control } from "react-hook-form";
-import { FormControl, 
-         FormDescription, 
+import { Control, ControllerRenderProps, FieldValues, Path } from "react-hook-form";
+import { FormControl,  
          FormField, 
          FormItem, 
          FormLabel, 
@@ -22,10 +21,10 @@ import { Checkbox } from "./ui/checkbox";
 
 
 
-interface CustomProps {
-  control: Control<any>,
+interface CustomProps <T extends FieldValues> {
+  control: Control<T>,
   fieldType: FormFieldType,
-  name: string,
+  name: Path<T>,
   label?: string,
   placeholder?: string,
   iconSrc?: string,
@@ -34,10 +33,11 @@ interface CustomProps {
   dateFormat?: string,
   showTimeSelect?: boolean,
   children?: React.ReactNode,
-  renderSkeleton?: (field: any) => React.ReactNode,
+  renderSkeleton?: (field: ControllerRenderProps<T>) => React.ReactNode,
 }
 
-const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
+const RenderField = <T extends FieldValues>({ field, props }: 
+  { field: ControllerRenderProps<T>, props: CustomProps<T>}) => {
   const { iconSrc, 
           fieldType, 
           iconAlt, 
@@ -147,7 +147,7 @@ const RenderField = ({ field, props}: { field: any, props: CustomProps}) => {
 
 }
 
-const CustomFormField = (props: CustomProps) => {
+const CustomFormField = <T extends FieldValues>(props: CustomProps<T>) => {
  const { control, 
          fieldType,
          name,

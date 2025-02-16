@@ -77,7 +77,7 @@ export const getRecentAppointmentList = async () => {
       return parseStringify(data);
     
     } catch (error) {
-        console.log("Failed to fetch appointments list");
+        console.log("Failed to fetch appointments list: ", error);
     }
 };
 
@@ -115,7 +115,7 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
 
 export const sendSMSNotification = async (userId: string, content: string) => {
   try {
-    const message = await messaging.createSms(
+    await messaging.createSms(
       ID.unique(),
       content,
       [],

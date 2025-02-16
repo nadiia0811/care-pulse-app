@@ -65,7 +65,8 @@ const RegisterForm = ({user}: {user: User}) => {
         identificationDocument: formData,
       }
 
-      //@ts-ignore
+     //@ts-expect-error: The return type of registerPatient is not properly 
+     // typed, hence we are ignoring the type error
       const patient = await registerPatient(patientData);
 
       if (patient) {

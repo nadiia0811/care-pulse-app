@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import Image from 'next/image';
-import { getRecentAppointmentList } from '@/lib/actions/appointment.actions';
+
 
 interface StatCardProps {
     count: number;

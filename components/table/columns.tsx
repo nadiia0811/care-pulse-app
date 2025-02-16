@@ -1,11 +1,8 @@
 "use client";
 
 
-import { ColumnDef, getPaginationRowModel, } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image";
-import { Button } from "@/components/ui/button"
-
 import StatusBadge from "../StatusBadge";
 import { formatDateTime } from "@/lib/utils";
 import { Appointment } from "@/types/appwrite.types";
@@ -54,8 +51,8 @@ export const columns: ColumnDef<Appointment>[] = [
       const doctor = Doctors.find((doc) => doc.name === row.original.primaryPhysician);
       return (
         <div className="flex items-center gap-3">
-           <Image src={doctor?.image!}
-                  alt={doctor?.name!}
+           <Image src={doctor?.image as string}
+                  alt={doctor?.name as string}
                   width={50}
                   height={50}
                   className="size-8" />
